@@ -12,7 +12,7 @@ struct rectangle
 class Ambulance
 {
     public:
-        explicit Ambulance();//constructor 
+        Ambulance();//constructor 
         void moving(char, rectangle&, Walls*, int, int, int);//change coordinate
         coordinate pos;// coordinate
         color where;

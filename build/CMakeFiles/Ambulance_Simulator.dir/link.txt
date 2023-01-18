@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/Ambulance_Simulator.dir/main.cpp.o CMakeFiles/Ambulance_Simulator.dir/src/App.cpp.o CMakeFiles/Ambulance_Simulator.dir/src/level.cpp.o CMakeFiles/Ambulance_Simulator.dir/src/Ambulance.cpp.o CMakeFiles/Ambulance_Simulator.dir/src/player.cpp.o  -o Ambulance_Simulator  -lsfml-window -lsfml-system -lsfml-graphics 

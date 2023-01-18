@@ -4,8 +4,8 @@
 using namespace std;
 Ambulance::Ambulance()
 {
-    pos.y = 1;
-    pos.x = 0;
+    pos.y = 3*50;
+    pos.x = 3*20;
     where = WHITE;
     Health = 3;
 }

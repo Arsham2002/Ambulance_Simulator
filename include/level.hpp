@@ -4,12 +4,15 @@ using namespace std;
 #include "Ambulance.hpp"
 #include "Walls.hpp"
 #include "player.hpp"
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 class level
 {
     public:
         level();//set level 1
         ~level();//free dynamic memory
-        void draw();//print board of game
+        void draw(sf::RenderWindow&);//print board of game
         void move(char);//calling moving of car
         bool check();//Checking if the game is over?
         bool win;//Is the player win?

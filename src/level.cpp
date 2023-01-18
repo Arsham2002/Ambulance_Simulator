@@ -1,5 +1,7 @@
 #include "level.hpp"
 #include <iostream>
+#define window_x 310
+#define window_y 250
 using namespace std;
 void print_color(string s, color txtcolor)
 {
@@ -7,80 +9,70 @@ void print_color(string s, color txtcolor)
     switch(txtcolor)
     {
         case RED:
-        cout << "\033[0;31m";
+        std::cout << "\033[0;31m";
         break;  
         case GREEN:
-        cout << "\033[0;32m";
+        std::cout << "\033[0;32m";
         break;
         case CYAN:
-        cout << "\033[1;36m";
+        std::cout << "\033[1;36m";
         break;
         default:
         break;
     }
-    cout << s << "\033[0m";
+    std::cout << s << "\033[0m";
 }
 level::level():win(false), nowlev(1), nmove(0),nWall(2)
 {
-    you.set_info();
-    table.row = 4;
-    table.col = 8;
+    table.row = 315;
+    table.col = 244;
     car = new Ambulance;
     wall = new Walls[2];
-    wall[0].pwall.x = 2;
-    wall[0].pwall.y = 0;
-    wall[1].pwall.x = 6;
-    wall[1].pwall.y = 3;
-    hospital = 2;
+    wall[0].pwall.x = 2*50;
+    wall[0].pwall.y = 2*20;
+    wall[1].pwall.x = 4*50;
+    wall[1].pwall.y = 5*40;
+    hospital = 2*50;
 }
-void level::draw()
+void level::draw(sf::RenderWindow& window)
 {
-    system("clear");
     int th = 0;
-    string line;
-    for(size_t i = 0; i < table.col * 3 + 2; i++)
+    sf::Texture road;
+    if(!road.loadFromFile("../assest/road3.png"))
+        cerr << "Can't open road!";
+    sf::Sprite road_sp;
+    road_sp.setTexture(road);
+    window.draw(road_sp);
+
+    sf::Texture wall_t;
+    if(!wall_t.loadFromFile("../assest/wall.png"))
+        cerr << "Can't open wall!";
+    sf::Sprite wall_sp;
+    wall_sp.setTexture(wall_t);
+    for(size_t i = 0; i < nWall; i++)
     {
-        cout << '-';
-        line += '-';
+        wall_sp.setPosition(wall[i].pwall.x,wall->pwall.y);
+        window.draw(wall_sp);
     }
-    line += '\n';
-    cout << '\n';
-    for(size_t i = 0; i < table.row; i++)
+
+    sf::Texture car_t;
+    if(!car_t.loadFromFile("../assest/car4.png"))
+        cerr << "Can't open car!";
+    sf::Sprite car_sp;
+    car_sp.setTexture(car_t);
+    wall_sp.setPosition(car->pos.x,car->pos.y);
+    window.draw(car_sp);
+
+    sf::Texture heart;
+    if(!heart.loadFromFile("../assest/heart3.png"))
+        cerr << "Can't open heart!";
+    sf::Sprite heart_sp;
+    heart_sp.setTexture(heart);
+    for(size_t i = 0; i< car->Health; i++)
     {
-        bool flag;
-        for(size_t j = 0 ; j < table.col; j++)
-        {
-            flag = true;//be false when car or wall be in this coordinate(i,j)
-            if(j == 0)
-                cout << "|";
-            if(car->pos.x == j && car->pos.y == i)
-            {
-                print_color(" > ", car->where);
-                flag = false;
-            }
-            if(th < nWall && wall[th].pwall.x == j)
-            {
-                if(flag)//if car is here doesn't print wall
-                    cout << ( wall[th].pwall.y == i ? "   " : "[ ]" );
-                th++;
-                flag = false;
-            }
-            if(flag)//nothing is here
-                cout << "   ";
-            if(j == table.col-1)
-            {
-                cout << "|";
-                if(i == hospital)
-                    cout << "|H|";
-            }
-            
-        }
-        cout << endl; 
-        th = 0;
+        heart_sp.setPosition(window_x - 278 + i * 8,window_y - 10);
+        window.draw(heart_sp);
     }
-    cout << line;
-    for(size_t i = 0 ; i < car -> Health; i++)//print heart of car
-        print_color(" <3 ", RED);
 }
 void level::move(char ch)
 {
